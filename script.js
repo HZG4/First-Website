@@ -1,29 +1,18 @@
 document.getElementById("feedback-form").addEventListener("submit", function(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const form = event.target;
+  const form = event.target;
 
-    const data = new FormData(form);
-    const firstName = data.get("firstName");
-    const lastName = data.get("lastName");
-    const email = data.get("email");
-    const comment = data.get("comment");
+  // Display the popup message
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  popup.textContent = "Your feedback has been noted!";
+  document.body.appendChild(popup);
 
-    const templateParams = {
-      from_name: `${firstName} ${lastName}`,
-      to_name: "Hamza Ghafoor",
-      message: comment,
-    };
+  // Remove the popup after 3 seconds
+  setTimeout(function() {
+    document.body.removeChild(popup);
+  }, 3000);
 
-    emailjs.send("service_8n9k6qj", "template_h5qwh79", templateParams)
-      .then(function(response) {
-        console.log("Email sent successfully:", response);
-        alert("Thank you for your feedback! Your message has been sent.");
-      })
-      .catch(function(error) {
-        console.error("Email sending error:", error);
-        alert("Oops! Something went wrong. Please try again later.");
-      });
-
-    form.reset();
-  });
+  form.reset();
+});
